@@ -249,27 +249,14 @@ fun HomeScreen(
                     warnDialog = true
                 }
             },
+            onSoftReboot = {
+                if (state.settings.softRebootConfirmDismissed) {
+                    vm.performSoftReboot()
+                } else {
+                    confirmAction = true
+                }
+            },
         )
-        // Действие при активном руте: перезагрузка userspace (как на iOS),
-        // с подтверждением против мискликов. Перезапуск эксплойта остался
-        // в меню разработчика
-        if (state.rootState == RootState.ROOTED) {
-            Button(
-                onClick = {
-                    if (state.settings.softRebootConfirmDismissed) {
-                        vm.performSoftReboot()
-                    } else {
-                        confirmAction = true
-                    }
-                },
-                modifier = Modifier.fillMaxWidth(),
-                shape = MaterialTheme.shapes.large,
-            ) {
-                Icon(Icons.Rounded.Refresh, null, modifier = Modifier.size(16.dp))
-                Spacer(Modifier.width(6.dp))
-                Text(stringResource(R.string.home_softreboot), maxLines = 1)
-            }
-        }
         // Плашка обновления приложения (автопоиск при запуске / «Проверить сейчас»).
         // Компактная, одна строка; диалог при первом нахождении открыт поверх всего
         androidx.compose.animation.AnimatedVisibility(
@@ -405,6 +392,7 @@ private fun Header() {
 private fun HeroCard(
     state: UiState,
     onRoot: () -> Unit,
+    onSoftReboot: () -> Unit,
 ) {
     val rooted = state.rootState == RootState.ROOTED
     // Кнопка рута активна всегда: эксплойт запускается из приложения,
@@ -464,6 +452,53 @@ private fun HeroCard(
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             textAlign = TextAlign.Center,
                         )
+                        Spacer(Modifier.height(14.dp))
+                        // Действия при руте — внутри карточки, обе контурные,
+                        // высота как у «Получить рут» (62dp)
+                        Row(
+                            Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        ) {
+                            OutlinedButton(
+                                onClick = onSoftReboot,
+                                enabled = !state.flowRunning,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(62.dp),
+                                shape = MaterialTheme.shapes.extraLarge,
+                            ) {
+                                Icon(Icons.Rounded.Refresh, null, modifier = Modifier.size(18.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text(stringResource(R.string.home_softreboot), maxLines = 1)
+                            }
+                            val ctx = androidx.compose.ui.platform.LocalContext.current
+                            OutlinedButton(
+                                onClick = {
+                                    val pkg = state.selectedKsu.packageName
+                                    val installed = try {
+                                        ctx.packageManager.getApplicationInfo(pkg, 0); true
+                                    } catch (_: Exception) { false }
+                                    if (installed) {
+                                        ctx.packageManager.getLaunchIntentForPackage(pkg)?.let {
+                                            ctx.startActivity(it)
+                                        }
+                                    } else {
+                                        android.widget.Toast.makeText(
+                                            ctx, ctx.getString(R.string.flow_manager_missing),
+                                            android.widget.Toast.LENGTH_SHORT,
+                                        ).show()
+                                    }
+                                },
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(62.dp),
+                                shape = MaterialTheme.shapes.extraLarge,
+                            ) {
+                                Icon(Icons.Rounded.LockOpen, null, modifier = Modifier.size(18.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text(stringResource(R.string.home_open_manager), maxLines = 1)
+                            }
+                        }
                     }
                     RootState.CHECKING -> {
                         LoadingIndicator(Modifier.size(56.dp))

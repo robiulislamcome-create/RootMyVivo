@@ -359,11 +359,14 @@ private fun UserDeviceCard(state: UiState) {
             } else {
                 // Как в бета1: «Используется метод …» — с границей для DF,
                 // GL — просто метод. Не vivo/iQOO — вместо «активен до …»
-                // честно: поддержку по таблицам не определить
+                // честно: поддержку по таблицам не определить. PATCHED при
+                // включённом «DF на всех ядрах» — ограничение версий снято
                 Text(
                     when {
-                        dfUsed && isVivo -> stringResource(R.string.payload_method_used_df, dfLimit)
-                        dfUsed -> stringResource(R.string.payload_method_used_df_unknown)
+                        dfUsed && !isVivo -> stringResource(R.string.payload_method_used_df_unknown)
+                        dfUsed && dfCompat == DeviceInfo.DfCompat.PATCHED ->
+                            stringResource(R.string.payload_method_df_unlocked)
+                        dfUsed -> stringResource(R.string.payload_method_used_df, dfLimit)
                         else -> stringResource(R.string.payload_method_used_gl)
                     },
                     style = MaterialTheme.typography.titleMedium,

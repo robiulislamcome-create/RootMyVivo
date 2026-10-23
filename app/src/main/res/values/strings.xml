@@ -126,6 +126,8 @@
     <string name="df_status_dead">Не применим: ядра 6.1.x мёртвы для DirtyFrag (mitigation в ядре)</string>
     <string name="df_status_nongki">Не применим: non-GKI ядро не поддерживается</string>
     <string name="log_df_staged">ksud и бутстрап подготовлены</string>
+    <string name="log_df_logbuf">«Log buffer size = Off» в настройках разработчика — включи и попробуй снова</string>
+    <string name="home_open_manager">Открыть менеджер</string>
     <string name="log_df_dead_61">DirtyFrag недоступен: ядро 6.1.x — примитив мёртв (mitigation в ядре)</string>
     <string name="log_df_patched">DirtyFrag недоступен: в этом ядре примитив пропатчен (исправление с мая 2026)</string>
     <string name="log_df_nongki">DirtyFrag недоступен: non-GKI ядро не поддерживается</string>
@@ -221,6 +223,7 @@
     <string name="payload_available_section">Доступные эксплоиты</string>
     <string name="payload_method_used_df">Используется метод DirtyFrag (активен до %1$s)</string>
     <string name="payload_method_used_df_unknown">Используется метод DirtyFrag (устройство не vivo/iQOO — поддержку не определить)</string>
+    <string name="payload_method_df_unlocked">Используется метод DirtyFrag (ограничение версий снято)</string>
     <string name="payload_method_used_gl">Используется метод GhostLock</string>
     <string name="supported_title">Поддерживаемые устройства</string>
     <string name="payload_screen_title">Эксплоит</string>

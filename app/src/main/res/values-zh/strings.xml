@@ -113,6 +113,8 @@
     <string name="df_status_dead">不适用：6.1.x 内核对 DirtyFrag 已失效（内核侧缓解）</string>
     <string name="df_status_nongki">不适用：不支持 non-GKI 内核</string>
     <string name="log_df_staged">ksud 与 bootstrap 已就绪</string>
+    <string name="log_df_logbuf">开发者选项中“日志缓冲区大小 = 关” — 请开启后重试</string>
+    <string name="home_open_manager">打开管理器</string>
     <string name="log_df_dead_61">DirtyFrag 不可用：内核 6.1.x — 原语已失效（内核侧缓解）</string>
     <string name="log_df_patched">DirtyFrag 不可用：该内核的原语已被修补（2026 年 5 月起的修复）</string>
     <string name="log_df_nongki">DirtyFrag 不可用：不支持 non-GKI 内核</string>
@@ -208,6 +210,7 @@
     <string name="payload_available_section">可用的漏洞利用</string>
     <string name="payload_method_used_df">使用 DirtyFrag 方法（在 %1$s 之前可用）</string>
     <string name="payload_method_used_df_unknown">使用 DirtyFrag 方法（非 vivo/iQOO 设备，无法确定支持范围）</string>
+    <string name="payload_method_df_unlocked">使用 DirtyFrag 方法（已解除版本限制）</string>
     <string name="payload_method_used_gl">使用 GhostLock 方法</string>
     <string name="supported_title">支持的设备</string>
     <string name="payload_screen_title">漏洞利用</string>
